@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>印度尼西亚域外法查明系统 · 华东政法大学涉外法治实验室</title>
+<meta name="description" content="华东政法大学涉外法治实验室 · 印度尼西亚域外法智能查明平台">
+<style>
+  :root{
+    --red:#b5232a; --red-deep:#7e181e; --red-mid:#d94f56; --red-soft:#fdf2f2;
+    --gold:#d4a333; --ink:#221f1e; --ink2:#5d5651; --ink3:#928a85; --ink4:#b8b1ac;
+    --bg:#fcfaf8; --card:#ffffff; --line:#efe8e3;
+    --serif:"Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong","SimSun",Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;}
+
+  /* ---------- 动效 ---------- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes meshMove{0%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,5%) scale(1.06)}100%{transform:translate(0,0) scale(1)}}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease;}
+  .reveal.on{opacity:1;transform:none;}
+
+  /* ---------- 导航 ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;height:72px;
+    display:flex;align-items:center;padding:0 44px;gap:28px;
+    background:rgba(252,250,248,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(181,35,42,.08);
+  }
+  .nav-logo img{height:40px;width:auto;display:block;}
+  .nav-links{flex:1;display:flex;justify-content:center;gap:38px;font-size:14px;color:var(--ink2);letter-spacing:1px;}
+  .nav-links a{position:relative;padding:4px 0;transition:color .2s;}
+  .nav-links a:hover{color:var(--red);}
+  .nav-links a::after{content:"";position:absolute;left:50%;right:50%;bottom:-2px;height:2px;background:var(--red);transition:left .25s,right .25s;}
+  .nav-links a:hover::after{left:0;right:0;}
+  .nav-login{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 26px;border-radius:24px;
+    background:linear-gradient(135deg,var(--red),var(--red-mid));color:#fff;font-size:14px;font-weight:600;
+    letter-spacing:2px;box-shadow:0 4px 14px rgba(181,35,42,.3);transition:transform .2s,box-shadow .2s;
+  }
+  .nav-login:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(181,35,42,.38);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:120px 24px 80px;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:-30%;
+    background:
+      radial-gradient(820px 560px at 28% 22%,rgba(181,35,42,.10),transparent 62%),
+      radial-gradient(700px 520px at 78% 76%,rgba(217,79,86,.09),transparent 62%),
+      radial-gradient(520px 420px at 70% 14%,rgba(212,163,51,.09),transparent 60%);
+    animation:meshMove 18s ease-in-out infinite;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;opacity:.55;
+    background-image:linear-gradient(rgba(181,35,42,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(181,35,42,.05) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(closest-side at 50% 42%,#000,transparent);
+  }
+  .hero>*{position:relative;z-index:1;}
+  .hero-kicker{
+    font-size:13px;letter-spacing:6px;color:var(--red);font-weight:600;margin-bottom:26px;
+    display:inline-flex;align-items:center;gap:14px;animation:fadeUp .8s ease both;
+  }
+  .hero-kicker::before,.hero-kicker::after{content:"";width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--red));}
+  .hero-kicker::after{background:linear-gradient(90deg,var(--red),transparent);}
+  .hero h1{
+    font-family:var(--serif);font-size:clamp(40px,5.6vw,64px);font-weight:700;
+    letter-spacing:10px;color:var(--ink);line-height:1.3;animation:fadeUp .8s .1s ease both;
+  }
+  .hero h1 .red{color:var(--red);}
+  .hero-sub{
+    font-size:15.5px;color:var(--ink2);max-width:640px;margin:26px auto 0;
+    animation:fadeUp .8s .2s ease both;
+  }
+  .hero-cta{margin-top:42px;display:flex;gap:16px;justify-content:center;animation:fadeUp .8s .3s ease both;}
+  .btn-main{
+    display:inline-flex;align-items:center;gap:10px;padding:14px 44px;border-radius:30px;
+    background:linear-gradient(135deg,var(--red-deep),var(--red));color:#fff;font-size:15.5px;font-weight:600;letter-spacing:3px;
+    box-shadow:0 8px 26px rgba(181,35,42,.32);transition:transform .2s,box-shadow .2s;
+  }
+  .btn-main:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(181,35,42,.4);}
+  .btn-sub{
+    display:inline-flex;align-items:center;padding:14px 36px;border-radius:30px;border:1.5px solid rgba(181,35,42,.35);
+    color:var(--red);font-size:15px;letter-spacing:2px;background:rgba(255,255,255,.6);transition:all .2s;
+  }
+  .btn-sub:hover{background:var(--red-soft);border-color:var(--red);}
+  .hero-stats{
+    margin-top:74px;display:flex;gap:0;background:rgba(255,255,255,.78);backdrop-filter:blur(8px);
+    border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 42px rgba(80,30,25,.08);
+    overflow:hidden;animation:fadeUp .8s .42s ease both;
+  }
+  .hs{padding:26px 46px;border-right:1px solid var(--line);}
+  .hs:last-child{border-right:none;}
+  .hs .v{font-family:Georgia,var(--serif);font-size:34px;font-weight:800;color:var(--red);line-height:1.15;font-variant-numeric:tabular-nums;}
+  .hs .v em{font-style:normal;font-size:18px;margin-left:2px;}
+  .hs .k{font-size:12px;color:var(--ink3);letter-spacing:2px;margin-top:6px;}
+
+  /* ---------- 通用 section ---------- */
+  section{padding:96px 24px;}
+  .wrap{max-width:1120px;margin:0 auto;}
+  .sec-kicker{
+    text-align:center;font-size:12px;letter-spacing:6px;color:var(--red);font-weight:600;margin-bottom:14px;
+    display:flex;align-items:center;justify-content:center;gap:14px;
+  }
+  .sec-kicker::before,.sec-kicker::after{content:"";width:30px;height:1px;background:rgba(181,35,42,.4);}
+  .sec-title{font-family:var(--serif);font-size:32px;font-weight:700;letter-spacing:6px;text-align:center;color:var(--ink);margin-bottom:14px;}
+  .sec-sub{text-align:center;font-size:14px;color:var(--ink3);max-width:620px;margin:0 auto 56px;}
+
+  /* ---------- 核心能力（01-04 渐变顶卡） ---------- */
+  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .cap{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    box-shadow:0 4px 18px rgba(80,30,25,.05);transition:transform .25s,box-shadow .25s;
+  }
+  .cap:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(80,30,25,.12);}
+  .cap-top{height:86px;position:relative;display:flex;align-items:flex-end;padding:0 20px 10px;}
+  .cap:nth-child(1) .cap-top{background:linear-gradient(135deg,#c9555b,#e8989c);}
+  .cap:nth-child(2) .cap-top{background:linear-gradient(135deg,#b5232a,#d94f56);}
+  .cap:nth-child(3) .cap-top{background:linear-gradient(135deg,#9e6b1d,#d4a333);}
+  .cap:nth-child(4) .cap-top{background:linear-gradient(135deg,#7e181e,#a8484d);}
+  .cap-num{font-family:Georgia,serif;font-size:44px;font-weight:800;color:rgba(255,255,255,.55);line-height:1;}
+  .cap-body{padding:20px;}
+  .cap-body b{display:block;font-family:var(--serif);font-size:16.5px;letter-spacing:1px;color:var(--ink);margin-bottom:8px;}
+  .cap-body p{font-size:13px;color:var(--ink2);line-height:1.75;}
+  .cap-tags{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;}
+  .cap-tags span{font-size:11px;color:var(--red);background:var(--red-soft);border-radius:12px;padding:2px 10px;}
+
+  /* ---------- 数据底座 ---------- */
+  .bases{background:linear-gradient(180deg,#fff,var(--bg));border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .base-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+  .base{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 22px;text-align:center;
+    transition:transform .25s,box-shadow .25s;
+  }
+  .base:hover{transform:translateY(-5px);box-shadow:0 14px 34px rgba(80,30,25,.1);}
+  .base .ico{width:38px;height:38px;margin:0 auto 14px;color:var(--red);}
+  .base .ico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+  .base .v{font-family:Georgia,var(--serif);font-size:26px;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums;}
+  .base .n{font-family:var(--serif);font-size:14.5px;color:var(--ink);letter-spacing:1px;margin-top:6px;}
+  .base .d{font-size:11.5px;color:var(--ink3);margin-top:4px;}
+
+  /* ---------- 查明流程 ---------- */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+  .flow::before{content:"";position:absolute;top:34px;left:12%;right:12%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(181,35,42,.35),rgba(181,35,42,.35),transparent);}
+  .step{text-align:center;padding:0 18px;position:relative;}
+  .step .dot{
+    width:68px;height:68px;margin:0 auto 18px;border-radius:50%;background:#fff;border:1.5px solid rgba(181,35,42,.3);
+    display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:22px;font-weight:800;color:var(--red);
+    box-shadow:0 6px 18px rgba(181,35,42,.12);position:relative;z-index:1;
+  }
+  .step b{display:block;font-family:var(--serif);font-size:16px;letter-spacing:1.5px;margin-bottom:8px;}
+  .step p{font-size:12.5px;color:var(--ink2);line-height:1.75;}
+
+  /* ---------- 愿景标语带 ---------- */
+  .vision{
+    position:relative;text-align:center;padding:110px 24px;overflow:hidden;
+    background:linear-gradient(120deg,#7e181e,#a02026 55%,#b5232a);color:#fff;
+  }
+  .vision::before{
+    content:"";position:absolute;inset:-30%;
+    background:radial-gradient(640px 420px at 24% 30%,rgba(255,255,255,.10),transparent 60%),
+      radial-gradient(560px 400px at 80% 76%,rgba(232,196,98,.16),transparent 62%);
+    animation:meshMove 20s ease-in-out infinite;
+  }
+  .vision>*{position:relative;}
+  .vision .vk{font-size:12px;letter-spacing:7px;color:rgba(255,255,255,.65);margin-bottom:30px;}
+  .vision h2{font-family:var(--serif);font-size:clamp(26px,3.6vw,40px);font-weight:700;letter-spacing:8px;line-height:2;}
+  .vision .vs{margin-top:34px;font-size:13px;letter-spacing:4px;color:rgba(255,255,255,.75);}
+
+  /* ---------- 页脚 ---------- */
+  footer{background:#fff;border-top:1px solid var(--line);padding:54px 24px 38px;text-align:center;}
+  footer .f-logo{height:46px;width:auto;margin:0 auto 20px;display:block;}
+  footer .f-name{font-family:var(--serif);font-size:15px;letter-spacing:3px;color:var(--ink);margin-bottom:6px;}
+  footer .f-sub{font-size:12px;letter-spacing:2px;color:var(--ink3);margin-bottom:24px;}
+  footer .f-beian{font-size:12px;color:var(--ink4);line-height:2;}
+  footer .f-beian a{color:var(--ink4);transition:color .2s;}
+  footer .f-beian a:hover{color:var(--red);}
+  footer .f-note{margin-top:14px;font-size:11px;color:var(--ink4);letter-spacing:1px;}
+
+  @media (max-width:960px){
+    .nav{padding:0 18px;}
+    .nav-links{display:none;}
+    .cap-grid{grid-template-columns:1fr 1fr;}
+    .base-grid{grid-template-columns:repeat(2,1fr);}
+    .flow{grid-template-columns:1fr 1fr;gap:34px 0;}
+    .flow::before{display:none;}
+    .hero-stats{flex-wrap:wrap;}
+    .hs{padding:18px 26px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="#top"><img src="/assets/img/logo.svg" alt="华东政法大学"></a>
+  <div class="nav-links">
+    <a href="#cap">核心能力</a>
+    <a href="#bases">数据底座</a>
+    <a href="#flow">查明流程</a>
+    <a href="#vision">实验室愿景</a>
+  </div>
+  <a class="nav-login" href="/app">登 录</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="hero-kicker">华东政法大学 · 涉外法治实验室</div>
+  <h1>印度尼西亚域外法<span class="red">查明系统</span></h1>
+  <div class="hero-sub">
+    以人工智能与法律实证研究为核心，依托印度尼西亚国家成文法库 27,549 份文档（历史英译语料 + Setneg JDIH 官方法规目录），
+    为涉外法律实务提供<b>可审查、可溯源</b>的印度尼西亚法律智能查明服务。
+  </div>
+  <div class="hero-cta">
+    <a class="btn-main" href="/app">进入查明系统</a>
+    <a class="btn-sub" href="#cap">了解平台</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hs"><div class="v" data-n="20574">0</div><div class="k">国家成文法（部）</div></div>
+    <div class="hs"><div class="v" data-n="390638">0</div><div class="k">条文检索单元</div></div>
+    <div class="hs"><div class="v" data-n="8">0</div><div class="k">官方来源原文补充（部）</div></div>
+  </div>
+</header>
+
+<!-- ================= 核心能力 ================= -->
+<section id="cap">
+  <div class="wrap">
+    <div class="sec-kicker reveal">CORE CAPABILITIES</div>
+    <h2 class="sec-title reveal">四大核心能力</h2>
+    <div class="sec-sub reveal">从自然语言问题到附完整出处的法查明意见，全程智能体驱动、全程可审查</div>
+    <div class="cap-grid">
+      <div class="cap reveal"><div class="cap-top"><div class="cap-num">01</div></div>
+        <div class="cap-body"><b>智能体法律查明</b>
+          <p>大模型智能体自主理解中文问题、转写英文法律检索式、规划检索路径并多轮取证，复杂问题约一分钟内出具查明意见。</p>
+          <div class="cap-tags"><span>意图理解</span><span>自主编排</span><span>多轮取证</span></div>
+        </div></div>
+      <div class="cap reveal"><div class="cap-top"><div class="cap-num">02</div></div>
+        <div class="cap-body"><b>权威法律底座</b>
+          <p>20,566 份历史英译语料、Setneg JDIH 6,975 条官方目录记录及 8 份重点 canonical 记录分层入库，共 807,065 个检索单元。英译材料仅供研究参考，以官方语言原文为准。</p>
+          <div class="cap-tags"><span>27,549 份成文法文档</span><span>6,975 条 Setneg 目录记录</span><span>全量向量化</span></div>
+        </div></div>
+      <div class="cap reveal"><div class="cap-top"><div class="cap-num">03</div></div>
+        <div class="cap-body"><b>三路混合检索</b>
+          <p>关键词全文检索保证术语与法条号精确命中，语义向量检索覆盖同义表达，重排模型严控相关性，查得全、排得准。</p>
+          <div class="cap-tags"><span>全文检索</span><span>语义向量</span><span>智能重排</span></div>
+        </div></div>
+      <div class="cap reveal"><div class="cap-top"><div class="cap-num">04</div></div>
+        <div class="cap-body"><b>可审查 · 可溯源</b>
+          <p>每项结论附法律编号、条号与条文原文出处链接，取证轨迹全程留痕可回放，证据不足时如实说明局限。</p>
+          <div class="cap-tags"><span>证据包输出</span><span>轨迹回放</span><span>拒绝臆造</span></div>
+        </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 数据底座 ================= -->
+<section class="bases" id="bases">
+  <div class="wrap">
+    <div class="sec-kicker reveal">AUTHORITATIVE DATA</div>
+    <h2 class="sec-title reveal">权威法律底座</h2>
+    <div class="sec-sub reveal">印度尼西亚为单一制国家，本系统以国家成文法为单底座；历史英译与官方印尼语原文均经结构化清洗和全量向量化，并在结果中区分语言、来源层级与版本限制。</div>
+    <div class="base-grid">
+      <div class="base reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M13.5 5.5l5 5"/><path d="M11 8l5 5"/><path d="M14.5 4.5l4 4a1.4 1.4 0 0 1-2 2l-4-4a1.4 1.4 0 0 1 2-2z"/><path d="M9.5 9.5l-6 6a1.4 1.4 0 0 0 2 2l6-6"/><path d="M12 21H3"/></svg></div>
+        <div class="v">807,065</div><div class="n">法规检索单元</div><div class="d">历史英译 · 官方印尼语原文</div>
+      </div>
+      <div class="base reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2.5z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20v4H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M9 7h7M9 10.5h5"/></svg></div>
+        <div class="v">20,566 部</div><div class="n">历史英译语料</div><div class="d">机器翻译 · 供研究参考</div>
+      </div>
+      <div class="base reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 11v3a1 1 0 0 0 1 1h2l3 5h2v-5"/><path d="M11 15l8 3V6l-8 3H4a1 1 0 0 0-1 1v1"/><path d="M21.5 10.5v3"/></svg></div>
+        <div class="v">6,975 条</div><div class="n">Setneg 官方目录记录</div><div class="d">Bahasa Indonesia · 全生命周期版本</div>
+      </div>
+      <div class="base reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 5-5 2.2 2.2-5 5-2.2z"/></svg></div>
+        <div class="v">机器核验</div><div class="n">引证自动验真</div><div class="d">法律 · Pasal · 来源链接逐项回查</div>
+      </div>
+      <div class="base reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 1 2.5 6"/><path d="M3 12h4M3 12V8"/><path d="M12 7.5V12l3 1.8"/></svg></div>
+        <div class="v">建设中</div><div class="n">官方材料库</div><div class="d">公告 · 规章 · 监管指南 · 规划中</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 查明流程 ================= -->
+<section id="flow">
+  <div class="wrap">
+    <div class="sec-kicker reveal">HOW IT WORKS</div>
+    <h2 class="sec-title reveal">智能查明流程</h2>
+    <div class="sec-sub reveal">像咨询法律专家一样提问，获得一份可提交审查的法查明意见</div>
+    <div class="flow">
+      <div class="step reveal"><div class="dot">壹</div><b>自然语言提问</b><p>直接用中文描述法律问题，无需检索技巧，支持口语化表达</p></div>
+      <div class="step reveal"><div class="dot">贰</div><b>智能体取证</b><p>自主选择底座、转写英文检索式、多轮检索，轨迹全程可见</p></div>
+      <div class="step reveal"><div class="dot">叁</div><b>综合研判</b><p>基于真实检索材料综合作答，证据不足时如实说明局限</p></div>
+      <div class="step reveal"><div class="dot">肆</div><b>证据包交付</b><p>结论 + 成文法依据 + 文本版本提示 + 完整出处，条文原文一键可查</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 愿景 ================= -->
+<div class="vision" id="vision">
+  <div class="vk">OUR VISION</div>
+  <h2>以科技赋能法治<br>以法治护航全球<br>构建中国涉外法治的智能新基建</h2>
+  <div class="vs">华东政法大学 · 涉外法治实验室</div>
+</div>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <img class="f-logo" src="/assets/img/logo.svg" alt="华东政法大学">
+  <div class="f-name">华东政法大学 · 涉外法治实验室</div>
+  <div class="f-sub">EAST CHINA UNIVERSITY OF POLITICAL SCIENCE AND LAW · FOREIGN-RELATED RULE OF LAW LABORATORY</div>
+  <div class="f-beian">
+    <a href="https://beian.mps.gov.cn/#/query/webSearch?code=31011002007947" target="_blank" rel="noopener noreferrer">沪公网安备31011002007947号</a>
+    &nbsp;｜&nbsp;
+    <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2025117200-3</a>
+  </div>
+  <div class="f-note">内部受限系统 · 仅限授权用户 · 查明结论仅供研究参考</div>
+</footer>
+
+<script>
+  // 滚动渐显
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+  // KPI 数字滚动（进入视口触发）
+  const fmt = (n) => n.toLocaleString("en-US");
+  const cu = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    cu.unobserve(e.target);
+    const t = +e.target.dataset.n, start = performance.now(), dur = 1400;
+    const ease = (x) => 1 - Math.pow(1 - x, 3);
+    (function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      e.target.textContent = fmt(Math.round(t * ease(p))) + (p === 1 && t >= 1000 ? "" : "");
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }), { threshold: 0.4 });
+  document.querySelectorAll(".hs .v").forEach((el) => cu.observe(el));
+</script>
+</body>
+</html>

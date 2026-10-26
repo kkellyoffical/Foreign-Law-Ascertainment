@@ -1,0 +1,20 @@
+Foreign Law Ascertainment
+外国法查明国别项目源码选集
+
+本仓库包含原项目贡献者编写的八国外国法查明代码。
+自有源码以Apache License 2.0发布，完整许可条款见LICENSE。
+
+第三方组件：
+
+1. Marked 12.0.2
+   Copyright (c) 2011-2024, Christopher Jeffrey.
+   适用MIT许可证，原文见third_party/marked-LICENSE。
+   各国static/assets/vendor/marked.min.js中的原版权标头保留。
+
+2. DOMPurify 3.4.16
+   Copyright (c) Cure53 and other contributors.
+   原项目提供Apache-2.0与MPL-2.0双重许可；本仓库按Apache-2.0使用。
+   原许可声明见third_party/dompurify-LICENSE，标准Apache-2.0条款见LICENSE。
+   各国static/assets/vendor/purify.min.js中的原版权标头保留。
+
+学校及第三方的名称、商标、标识和未发布的数据不在本仓库的许可授权范围内。

@@ -1,0 +1,24 @@
+# 真实配置、凭据、用户材料和运行产物不进入源码展示仓库。
+.env
+.env.*
+env
+*.key
+*.pem
+*.p12
+*.pfx
+*.enc
+*.token
+*.dump
+*.sql.gz
+*.log
+*.pid
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+data/
+uploads/
+artifacts/
+大创材料*/
+gitleaks-report*.json
